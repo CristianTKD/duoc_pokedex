@@ -17,6 +17,42 @@ tinymce.init({
   
 const pokemones = []; //Definir un arreglo en javascript
 
+const cargarTabla = ()=>{
+  //1. Una referencia a la tabla
+  let tbody = document.querySelector("#tbody-pokemon");
+  //Antes del fro es limpiar la tabla para que no se repitan
+  tbody.innerHTML = "";
+  //2. Por cada pokemon generar una fila
+  for(let i=0; i < pokemones.length; ++ i){ //for i in range(0,10)
+    let p = pokemones[i];
+    //Crea un elemento que no existe, pero no lo agrega a la página
+    //Puedo crear cualquier etiqueta html aquí
+    let tr = document.createElement("tr");
+    //3. Por cada atributo de los pokemones (nombre,tipo,etc) generar una celda
+    let tdNombre = document.createElement("td");
+    let tdTipo = document.createElement("td");
+    let tdDescripcion = document.createElement("td");
+    let tdNro = document.createElement("td");
+    let tdAcciones = document.createElement("td");
+
+    tdNombre.innerText = p.nombre;
+    //TODO: Mostrar el icono, no el numero
+    tdTipo.innerText = p.tipo;
+    //TODO: Esto va a funcionar a la primera
+    tdDescripcion.innerHTML = p.descripcion;
+    tdNro.innerText = i + 1;
+    ////TODO: Como agrego un boton para las acciones?
+    tr.appendChild(tdNro);
+    tr.appendChild(tdNombre);
+    tr.appendChild(tdTipo);
+    tr.appendChild(tdDescripcion);
+    tr.appendChild(tdAcciones);
+    tbody.appendChild(tr);
+    
+  } 
+  //4. Agregar esa fila a la tabla (Manipulando el DOM)
+};
+
   document.querySelector("#pokemon-form").addEventListener('submit', (e)=>{
     e.preventDefault(); //Prevenir que el formulario recargue la página
     let nombre = document.querySelector("#nombre-txt").value;
@@ -24,7 +60,6 @@ const pokemones = []; //Definir un arreglo en javascript
     let legendario = document.querySelector("#legendario-si").checked;
     let tipo = document.querySelector("#tipo-select").value;
     
-
     let pokemon = {};
     pokemon.nombre = nombre;
     pokemon.descripcion = descripcion;
@@ -32,6 +67,7 @@ const pokemones = []; //Definir un arreglo en javascript
     pokemon.tipo = tipo;
     pokemones.push(pokemon);
     console.log(pokemones);
-
+    cargarTabla();
+    Swal.fire("Pokemon Registrado!!");
   });
   
