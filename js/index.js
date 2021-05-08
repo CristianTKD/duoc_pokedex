@@ -16,8 +16,15 @@ tinymce.init({
   });
   
 const pokemones = []; //Definir un arreglo en javascript
-const eliminar = function(){
+const eliminar = async function(){
 
+  let res = await Swal.fire({
+    title: "Desea enviar el pokemon al profesor oak?",
+    showCancelButton: true,
+    confirmButtontext: "Enviar!"
+  });
+  // La persona dijo que si?
+  if(res.isConfirmed){
   //1. Saber que botón fue el que se apreto
   //2. Sacar el nro del botón
   let nro = this.nro;
@@ -25,6 +32,9 @@ const eliminar = function(){
   pokemones.splice(nro,1);
   //4. Recargar la tabla
   cargarTabla();
+}else{
+  Swal.fire("Operación cancelada");
+}
 };
 
 const cargarTabla = ()=>{
